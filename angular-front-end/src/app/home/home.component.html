@@ -1,0 +1,101 @@
+<div class="container">
+  <h1 class="text-center">Calculate Your Reward Points!</h1>
+  <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div *ngIf="successMessage" [ngClass]="['success-message']">
+    {{ successMessage }}
+  </div>
+  
+  <button class="btn custom-green-button mb-3" (click)="resetData()">
+    <i class="bi bi-arrow-clockwise custom-green-icon"></i>
+    Reset Data
+  </button>
+
+  <div class="mt-4">
+    <div class="row">
+<!-- Table Section -->
+<div class="col-md-6">
+  <h3>View Past Transactions</h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Transaction Date</th>
+        <th>Transaction Amount</th>
+        <th>Action</th> <!-- Add a new column for the Delete button -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of pastTransactions">
+        <td>{{ transaction.transactionDate | date: 'MMM d, y, h:mm a' }}</td>
+        <td>{{ transaction.transactionAmount | currency: 'USD':'symbol' }}</td>
+        <td>
+          <button (click)="deleteTransaction(transaction.transactionId)">
+            <i class="bi bi-trash"></i>  Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    
+  </table>
+  <button class="initially-selected" (click)="toggleAddTransactionSection()">
+    Click Here to Add More Monthly Transactions
+  </button>
+</div>
+
+
+      <div class="col-md-6">
+        <h3>View Reward Points</h3>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Reward Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let monthlyReward of rewardPoints?.monthlyRewards">
+              <td>{{ monthlyReward?.month || 'N/A' }}</td>
+              <td>{{ monthlyReward?.rewardPoints || 'N/A' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3>Total Reward Points: {{ rewardPoints?.totalRewardPoints || 'N/A' }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div class="mt-4" >
+    <div *ngIf="selectedTab === 'addTransactions' || showAddTransactionSection">   
+      <table class="table table-bordered table-striped" style="width: 30%; background-color: lightgray;">
+        <tr>
+          <td>
+
+
+    <form [formGroup]="addTransactionForm" (ngSubmit)="submitAddTransactionForm()">
+      <div class="form-group">
+        <label for="transactionAmount" class="form-label">Transaction Amount</label>
+        <input type="number" id="transactionAmount" formControlName="transactionAmount" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="transactionDate" class="form-label">Transaction Date</label>
+        <input type="datetime-local" id="transactionDate" formControlName="transactionDate" class="form-control">
+      </div>
+      <button
+        type="submit"
+        [disabled]="addTransactionForm.invalid"
+        [ngClass]="{
+          'btn': true,
+          'add-transaction-button': true,
+          'disabled-button': addTransactionForm.invalid,
+          'enabled-button': !addTransactionForm.invalid
+        }"
+      >
+        Submit
+      </button>
+    </form>
+  </td>
+</tr> 
+</table> 
+  </div>
+  </div>
+</div>
