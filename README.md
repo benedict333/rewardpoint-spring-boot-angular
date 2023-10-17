@@ -1,5 +1,5 @@
 # rewardpoint-spring-boot-angular
-Please check out this  [live Demo] http://34.70.167.81/) 
+Please check out this  [live Demo](http://34.70.167.81/) 
 This repo contains two applications -java springboot as the backend and angular for the front-end used for calculating reward points for a customer.
 <br>
 <br>
