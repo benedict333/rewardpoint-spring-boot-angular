@@ -1,5 +1,14 @@
 <div class="container">
   <h1 class="text-center">Calculate Your Reward Points!</h1>
+  <br>
+ <p> Please note that this application calculates the rewardpoints based on the transactions for the previous 3 months which excludes the current month. 
+ Reward points are calculated as per the logic below:
+ <br>
+ A customer receives 2 points for every dollar spent over $100 in each transaction, plus 1 point for every dollar spent between $50 and $100 in each transaction.
+ <br>
+ (e.g. a $120 purchase = 2x$20 + 1x$50 = 90 points).
+</p>
+<br>
   <div class="alert alert-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
   <div *ngIf="successMessage" [ngClass]="['success-message']">
     {{ successMessage }}
@@ -66,6 +75,7 @@
   <!-- Form Section -->
   <div class="mt-4" >
     <div *ngIf="selectedTab === 'addTransactions' || showAddTransactionSection">   
+      <p>Please note that the calculation of the reward points will be available for the past three months only. So if you add any transactions beyond these periods will not be considered for reward calculations. </p>
       <table class="table table-bordered table-striped" style="width: 30%; background-color: lightgray;">
         <tr>
           <td>
